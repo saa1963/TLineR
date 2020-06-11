@@ -1,25 +1,27 @@
 ﻿import * as React from 'react';
-import { Collapse, Container, Navbar, NavbarToggler, DropdownToggle, DropdownMenu, DropdownItem, Dropdown, Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Collapse, Container, Navbar, NavbarToggler, DropdownToggle, DropdownMenu, DropdownItem, Dropdown, Button, Badge } from 'reactstrap';
 import './NavMenu.css';
+import * as CurrentUserStore from '../store/CurrentUser';
 
-export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean, dropdownOpen: boolean }> {
+type CurrentUserProps =
+  CurrentUserStore.CurrentUserState &
+  typeof CurrentUserStore.actionCreators;
+
+export default class NavMenu extends React.PureComponent<{}, { dropdownOpen: boolean }> {
   public state = {
-    isOpen: false,
     dropdownOpen: false
   };
 
   public render() {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
+        <Navbar className="navbar-expand navbar-toggleable border-bottom box-shadow mb-3" light>
           <Container className="justify-content-start">
             <Button className="nbutton mr-1" id="prev_page" color="primary" href="#">&lt;&lt;</Button>
             <Button className="nbutton mr-1" id="prev_period" color="primary">&lt;</Button>
             <Button className="nbutton mr-1" id="next_period" color="primary" href="#">&gt;</Button>
             <Button className="nbutton" id="next_page" color="primary" href="#">&gt;&gt;</Button>
-          </Container>
-
-          <Collapse className="d-sm-inline-flex flex-sm-row" isOpen={this.state.isOpen} navbar>
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
               <DropdownToggle nav caret>
                 Линия времени
@@ -30,21 +32,23 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean, 
                 <DropdownItem>Загрузить файл</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Container fluid className="justify-content-end">
-              <Button color="primary" className="mr-1" outline>Регистрация</Button>
-              <Button color="primary" outline>Вход</Button>
-            </Container>
-          </Collapse>
-          <NavbarToggler onClick={this.toggle} className="mr-2" />
+          </Container>
+          <Container fluid className="justify-content-end">
+            <div className="mr-2"></div>
+            <Button color="primary" className="mr-1" outline onClick={this.Register}>Регистрация</Button>
+            <Button color="primary" outline onClick={this.Logon}>Вход</Button>
+          </Container>
         </Navbar>
       </header>
     );
   }
 
-  private toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+  private Register = () => {
+    alert('Reg')
+  }
+
+  private Logon = () => {
+    alert('Log')
   }
 
   private toggleDropdown = () => {
