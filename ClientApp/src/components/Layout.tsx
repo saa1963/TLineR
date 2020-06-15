@@ -12,6 +12,7 @@ export class Layout extends React.PureComponent<{}, LayoutState> {
     this.state = {user: ''}
   }
   render() {
+
     return (
     <React.Fragment>
         <NavMenu User={this.state.user} OnChangeUser={this.OnChangeUser.bind(this)} />
