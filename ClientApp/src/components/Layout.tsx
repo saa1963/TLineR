@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { Container } from 'reactstrap';
-import NavMenu, { NMenuProps } from './NavMenu';
+import NavMenu from './NavMenu';
 
-export class Layout extends React.PureComponent<{}, NMenuProps> {
+interface LayoutState {
+  user: string
+}
+
+export class Layout extends React.PureComponent<{}, LayoutState> {
   constructor() {
     super({})
     this.state = {user: ''}
@@ -10,7 +14,7 @@ export class Layout extends React.PureComponent<{}, NMenuProps> {
   render() {
     return (
     <React.Fragment>
-        <NavMenu OnChangeUser={this.OnChangeUser} />
+        <NavMenu User={this.state.user} OnChangeUser={this.OnChangeUser.bind(this)} />
         <Container>
             {this.props.children}
         </Container>
@@ -18,8 +22,7 @@ export class Layout extends React.PureComponent<{}, NMenuProps> {
       )
   }
 
-  private OnChangeUser(p_user: NMenuProps) {
-    this.setState(p_user)
-    alert(p_user.user)
+  private OnChangeUser(p_user: string) {
+    this.setState({ user: p_user })
   }
 }
