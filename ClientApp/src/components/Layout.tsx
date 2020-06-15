@@ -1,12 +1,25 @@
 import * as React from 'react';
 import { Container } from 'reactstrap';
-import NavMenu from './NavMenu';
+import NavMenu, { NMenuProps } from './NavMenu';
 
-export default (props: { children?: React.ReactNode }) => (
+export class Layout extends React.PureComponent<{}, NMenuProps> {
+  constructor() {
+    super({})
+    this.state = {user: ''}
+  }
+  render() {
+    return (
     <React.Fragment>
-        <NavMenu/>
+        <NavMenu OnChangeUser={this.OnChangeUser} />
         <Container>
-            {props.children}
+            {this.props.children}
         </Container>
-    </React.Fragment>
-);
+      </React.Fragment>
+      )
+  }
+
+  private OnChangeUser(p_user: NMenuProps) {
+    this.setState(p_user)
+    alert(p_user.user)
+  }
+}

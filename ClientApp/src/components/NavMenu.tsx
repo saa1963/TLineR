@@ -7,12 +7,19 @@ import * as CurrentUserStore from '../store/CurrentUser';
 type CurrentUserProps =
   CurrentUserStore.CurrentUserState &
   typeof CurrentUserStore.actionCreators;
+export type NMenuProps = { user: string }
+type OnChangeUserType = (user: NMenuProps) => void
+//type
+interface NavmenuProps {
+  OnChangeUser: OnChangeUserType
+}
 
-export default class NavMenu extends React.PureComponent<{}, { dropdownOpen: boolean }> {
-  public state = {
-    dropdownOpen: false
-  };
-
+export default class NavMenu extends React.PureComponent<NavmenuProps, { dropdownOpen: boolean }> {
+  constructor(props: NavmenuProps) {
+    super(props)
+    this.state = {dropdownOpen: false}
+  }
+  
   public render() {
     return (
       <header>
@@ -48,7 +55,7 @@ export default class NavMenu extends React.PureComponent<{}, { dropdownOpen: boo
   }
 
   private Logon = () => {
-    alert('Log')
+    this.props.OnChangeUser({user: 'Иванов'})
   }
 
   private toggleDropdown = () => {
