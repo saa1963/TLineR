@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Collapse, Container, Navbar, NavbarToggler, DropdownToggle, DropdownMenu, DropdownItem, Dropdown, Button, Badge } from 'reactstrap';
 import './NavMenu.css';
 import * as CurrentUserStore from '../store/CurrentUser';
+import { ApplicationState } from '../store';
 
 type CurrentUserProps =
   CurrentUserStore.CurrentUserState &
@@ -64,3 +65,5 @@ export default class NavMenu extends React.PureComponent<NavmenuProps, { dropdow
     });
   }
 }
+
+

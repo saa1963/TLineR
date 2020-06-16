@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { Container } from 'reactstrap';
-import NavMenu, { NMenuProps } from './NavMenu';
+import NavMenu, { NMenuProps } from '../components/NavMenu';
+import { ApplicationState } from '../store';
+import { connect } from 'react-redux';
+import { actionCreators } from '../store/CurrentUser';
 
 export class Layout extends React.PureComponent<{}, NMenuProps> {
   constructor() {
     super({})
-    this.state = {user: ''}
   }
-  render() {
+  render(dispatch: ) {
     return (
     <React.Fragment>
         <NavMenu OnChangeUser={this.OnChangeUser} />
@@ -19,7 +21,11 @@ export class Layout extends React.PureComponent<{}, NMenuProps> {
   }
 
   private OnChangeUser(p_user: NMenuProps) {
-    this.setState(p_user)
-    alert(p_user.user)
+
   }
 }
+
+export default connect(
+  (state: ApplicationState) => state.currentUser,
+  actionCreators
+)(NavMenu);
