@@ -8,10 +8,11 @@ import { ApplicationState } from '../store';
 type CurrentUserProps =
   CurrentUserStore.CurrentUserState &
   typeof CurrentUserStore.actionCreators;
-export type NMenuProps = { user: string }
-type OnChangeUserType = (user: NMenuProps) => void
-//type
+
+type OnChangeUserType = (user: string) => void
+
 interface NavmenuProps {
+  User: string
   OnChangeUser: OnChangeUserType
 }
 
@@ -42,13 +43,25 @@ export default class NavMenu extends React.PureComponent<NavmenuProps, { dropdow
             </Dropdown>
           </Container>
           <Container fluid className="justify-content-end">
-            <div className="mr-2"></div>
+            <div className="mr-2">{this.props.User}</div>
             <Button color="primary" className="mr-1" outline onClick={this.Register}>Регистрация</Button>
-            <Button color="primary" outline onClick={this.Logon}>Вход</Button>
+            <Button color="primary" outline onClick={this.Logon}>{this.EnterLeave}</Button>
           </Container>
         </Navbar>
       </header>
     );
+  }
+
+  private get EnterLeave(): string {
+    if (!this.IsLogon) {
+      return 'Вход'
+    } else {
+      return 'Выход'
+    }
+  }
+
+  private get IsLogon(): boolean {
+    return this.props.User !== ''
   }
 
   private Register = () => {
@@ -56,7 +69,12 @@ export default class NavMenu extends React.PureComponent<NavmenuProps, { dropdow
   }
 
   private Logon = () => {
-    this.props.OnChangeUser({user: 'Иванов'})
+    const logon = () => 'Иванов'
+    if (!this.IsLogon) {
+      this.props.OnChangeUser(logon())
+    } else {
+      this.props.OnChangeUser('')
+    }
   }
 
   private toggleDropdown = () => {
